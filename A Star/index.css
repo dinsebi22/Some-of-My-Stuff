@@ -1,0 +1,18 @@
+.cellStyle {
+    padding-left: 17px;
+    border-left: 1px solid white;
+}
+
+.rowOfCells {}
+
+.theWay {
+    background-color: blue;
+}
+
+.road {
+    background-color: #cfcfcf;
+}
+
+.wall {
+    background-color: purple;
+}
