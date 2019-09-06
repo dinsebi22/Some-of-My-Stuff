@@ -85,9 +85,7 @@ async function SelectionSort() {
         let j_min = i;
         for (let j = i + 1; j < len; j++) {
             if (cells[j].value < cells[j_min].value) {
-
                 j_min = j;
-
             }
         }
         cells[j_min].element.style.backgroundColor = 'red';
@@ -102,8 +100,6 @@ async function SelectionSort() {
             swap(cells.length);
         }
     }
-
-    console.log(cells);
 }
 
 
