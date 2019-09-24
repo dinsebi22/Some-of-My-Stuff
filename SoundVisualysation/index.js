@@ -26,7 +26,7 @@ function animationLooper() {
     // find the center of the window
     center_x = canvas.width / 2;
     center_y = canvas.height / 2;
-    radius = 150;
+    radius = 360;
     // style the background
     var gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
     gradient.addColorStop(0, "rgba(35, 7, 77, 1)");
