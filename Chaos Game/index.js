@@ -1,6 +1,7 @@
-let canvas;
-let ctx ;
-let fps = 120;
+let canvas = document.getElementById('canvas')
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let ctx = canvas.getContext('2d');
 
 let positions = [
     { x: window.innerWidth / 2, y: 100 },
@@ -13,24 +14,6 @@ let randomPoint = {
     x: window.innerWidth / 2,
     y: window.innerHeight / 3
 }
-
-window.onload = function () {
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    init();
-    setInterval(execute, 1000 / fps);
-}
-
-function execute () {
-    for (let i = 0; i < 100 ; i++){
-        let middlePoint = getMiddle(randomPoint)
-        randomPoint = middlePoint;
-    }
-}
-
 
 function init() {
     for (let i = 0; i < positions.length; i++) {
@@ -45,7 +28,7 @@ function init() {
 
 function addRandomPoint(point) {
     ctx.beginPath();
-    ctx.arc(point.x, point.y, 0.5, 0, 2 * Math.PI);
+    ctx.arc(point.x, point.y, 0.05, 0, 2 * Math.PI);
     ctx.fillStyle = 'green';
     ctx.fill();
     ctx.closePath();
@@ -71,13 +54,16 @@ function roleDice() {
     return Math.floor(Math.random() * 6) + 1
 }
 
-// function animate() {
-//     requestAnimationFrame(animate);
-//     let middlePoint = getMiddle(start)
-//     start = middlePoint;
-// }
+function animate() {
+    requestAnimationFrame(animate);
+    for (let i = 0; i < 200; i++) {
+        let middlePoint = getMiddle(randomPoint)
+        randomPoint = middlePoint;
+    }
 
+}
 
-// requestAnimationFrame(animate)
+init();
+requestAnimationFrame(animate)
 
 
