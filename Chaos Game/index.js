@@ -28,8 +28,8 @@ function init() {
 
 function addRandomPoint(point) {
     ctx.beginPath();
-    ctx.arc(point.x, point.y, 0.05, 0, 2 * Math.PI);
-    ctx.fillStyle = 'green';
+    ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI);
+    ctx.fillStyle = 'white';
     ctx.fill();
     ctx.closePath();
     return { x: point.x, y: point.y }
@@ -56,10 +56,10 @@ function roleDice() {
 
 function animate() {
     requestAnimationFrame(animate);
-    for (let i = 0; i < 200; i++) {
+    // for (let i = 0; i < 200; i++) {
         let middlePoint = getMiddle(randomPoint)
         randomPoint = middlePoint;
-    }
+    // }
 
 }
 
