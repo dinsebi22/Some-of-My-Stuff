@@ -1,14 +1,25 @@
 var canvas, ctx, center_x, center_y, radius, bars,
     x_end, y_end, bar_height, bar_width,
     frequency_array;
-bars = 600;
+
+bars = 300;
 bar_width = 2;
+
+function startStuff() {
+    console.log("Playing")
+    context = new AudioContext();
+    initPage();
+    document.getElementById('playB').style.display = 'none';
+}
 
 function initPage() {
     audio = new Audio();
-    context = new(window.AudioContext || window.webkitAudioContext)();
+    audio.src =
+        "https://archive.org/download/VivaldiSummer/Antonio_vivaldi_Summer.mp3";
+    audio.controls = false;
+    audio.crossOrigin = "anonymous";
     analyser = context.createAnalyser();
-    audio.src = "sciophobia.mp3"; // the source path
+    // audio.src = "sciophobia.mp3"; // the source path
     source = context.createMediaElementSource(audio);
     source.connect(analyser);
     analyser.connect(context.destination);
@@ -26,11 +37,11 @@ function animationLooper() {
     // find the center of the window
     center_x = canvas.width / 2;
     center_y = canvas.height / 2;
-    radius = 360;
+    radius = 100;
     // style the background
     var gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, "rgba(35, 7, 77, 1)");
-    gradient.addColorStop(1, "rgba(204, 83, 51, 1)");
+    gradient.addColorStop(0, "white");
+    gradient.addColorStop(1, "grey");
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     //draw a circle
@@ -54,7 +65,7 @@ function animationLooper() {
 }
 // for drawing a bar
 function drawBar(x1, y1, x2, y2, width, frequency) {
-    var lineColor = "rgb(" + frequency + ", " + frequency + ", " + 205 + ")";
+    var lineColor = "rgb(" + frequency/5 + ", " + frequency/10 + ", " + 25 + ")";
     ctx.strokeStyle = lineColor;
     ctx.lineWidth = width;
     ctx.beginPath();
