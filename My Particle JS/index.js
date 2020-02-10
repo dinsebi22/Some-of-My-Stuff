@@ -1,4 +1,6 @@
 var canvas = document.getElementById('panel');
+let windowW = window.innerWidth;
+let windowH = window.innerHeight;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -21,7 +23,7 @@ function Particle(x, y, dx, dy, radius) {
 
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
         c.closePath();
-        c.fillStyle = 'black';
+        c.fillStyle = 'white';
         c.fill();
     }
 
@@ -43,26 +45,11 @@ function Particle(x, y, dx, dy, radius) {
         if (Math.abs(this.x - o.x) < 200 && Math.abs(this.y - o.y) < 200) {
             c.beginPath();
             c.moveTo(this.x, this.y);
-            c.strokeStyle = 'black';
+            c.strokeStyle = 'white';
             c.lineTo(o.x, o.y)
             c.lineWidth = 0.2;
             c.stroke();
             c.closePath();
-        }
-    }
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-    for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-    }
-
-    for (let i = 0; i < particles.length - 1; i++) {
-        for (let j = 0; j < particles[i].connections.length; j++) {
-            particles[i].connect(particles[i].connections[j]);
         }
     }
 }
@@ -91,10 +78,52 @@ function initC(maxConnections) {
     }
 }
 
+
+function resizeCanvas() {
+    c.canvas.width = window.innerWidth;
+    c.canvas.height = window.innerHeight;
+    windowW = window.innerWidth;
+    widnowH = window.innerHeight;
+    c.clearRect(0, 0, window.innerwidth, window.innerHeight)
+
+    particles = [];
+    // Particle Count , Particle Radius , Max speed of particle
+    initP(100, 5, 5);
+    // Number of connections
+    initC(10);
+    requestAnimationFrame(animate);
+
+}
+
+function checkIfResized() {
+    return (windowH !== window.innerHeight || windowW !== window.innerWidth) ? true : false;
+}
+
+function animate() {
+   if (checkIfResized()) {
+        resizeCanvas();
+        return;
+    }else{
+       c.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    }
+    requestAnimationFrame(animate);
+
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+    }
+
+    for (let i = 0; i < particles.length - 1; i++) {
+        for (let j = 0; j < particles[i].connections.length; j++) {
+            particles[i].connect(particles[i].connections[j]);
+        }
+    }
+}
+
+
 // Particle Count , Particle Radius , Max speed of particle
-initP(433, 3, 2);
+initP(100, 5, 5);
 // Number of connections
-initC(6);
+initC(10);
 animate();
 
 
