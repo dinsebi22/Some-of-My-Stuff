@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: black;
 }
 
 html,
@@ -8,4 +9,15 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    text-align: center;
+}
+
+#playB {
+    position: absolute;
+    padding: 10px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    border-radius: 0%;
+    font-size: 3em;
+    top: calc(50vh - (3em / 2));
 }
