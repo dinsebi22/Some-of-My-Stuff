@@ -1,3 +1,6 @@
+let windowW = window.innerWidth;
+let windowH = window.innerHeight;
+
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -47,11 +50,33 @@ function addPoint(centerX, centerY, radius, color) {
     ctx.closePath();
 }
 
+function resizeCanvas() {
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    windowW = window.innerWidth;
+    widnowH = window.innerHeight;
+   
+    ctx.clearRect(0, 0, window.innerwidth, window.innerHeight)
+
+    requestAnimationFrame(animate);
+
+}
+
+function checkIfResized() {
+    return (windowH !== window.innerHeight || windowW !== window.innerWidth) ? true : false;
+}
+
 function animate(){
    requestAnimationFrame(animate)
+   
+   if (checkIfResized()) {
+        resizeCanvas();
+        return;
+    }
+   
    for (let i = 0; i < 200; i++){
         calculateAndDraw()
     }
    
 }
-requestAnimationFrame(animate)
+   requestAnimationFrame(animate)
