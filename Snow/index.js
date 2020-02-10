@@ -1,3 +1,5 @@
+let windowW = window.innerWidth;
+let windowH = window.innerHeight;
 
 let canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth;
@@ -55,7 +57,7 @@ function Particle(x, y, velocity, wiggle) {
 let snow = [];
 
 function init() {
-    for (let i = 0; i < 3000; i++) {
+    for (let i = 0; i < 1000; i++) {
         let pos = randomPos();
         snow.push(new Particle(pos.x, pos.y, Math.random(), Math.random() ))
     }
@@ -63,10 +65,35 @@ function init() {
 
 init();
 
-function animate() {
+
+function resizeCanvas() {
+    c.canvas.width = window.innerWidth;
+    c.canvas.height = window.innerHeight;
+   
+    windowW = window.innerWidth;
+    widnowH = window.innerHeight;
+
+    snow = [];
+    init();
+   
     requestAnimationFrame(animate);
+
+}
+
+function checkIfResized() {
+    return (windowH !== window.innerHeight || windowW !== window.innerWidth) ? true : false;
+}
+
+function animate() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
+   if (checkIfResized()) {
+        resizeCanvas();
+        return;
+    }else{
+        requestAnimationFrame(animate);
+    }
+   
     for (let i = 0; i < snow.length; i++) {
         snow[i].draw();
         snow[i].drop();
