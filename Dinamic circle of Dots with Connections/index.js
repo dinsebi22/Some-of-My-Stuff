@@ -1,3 +1,6 @@
+let windowW = window.innerWidth;
+let windowH = window.innerHeight;
+
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -78,9 +81,34 @@ function Dot(x, y, radius, centerOffset, radialAngleOnCircle, multiplier, maxGro
     }
 }
 
+
+function resizeCanvas() {
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    windowW = window.innerWidth;
+    widnowH = window.innerHeight;
+    ctx.clearRect(0, 0, window.innerwidth, window.innerHeight)
+   
+   canvasCenterX = windowW / 2;
+   canvasCenterY = windowH / 2;
+   
+    circles = [];
+    initDotCircle(4, 350, 400, 1, 14, 70, 0.9, 25, 0.7);
+}
+
+function checkIfResized() {
+    return (windowH !== window.innerHeight || windowW !== window.innerWidth) ? true : false;
+}
+
+
 function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+   if (checkIfResized()) {
+        resizeCanvas();
+        return;
+    }else{
+         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+         requestAnimationFrame(animate);
+    }
 
     for (let i = 0; i < circles.length; i++) {
         for (let j = 0; j < circles[i].length; j++) {
@@ -145,4 +173,4 @@ function initDotCircle(circleCount, dotCount, maxDistFromCenter, radius, multipl
 
 
 //Outer Ring Initialization
-initDotCircle(4, 250, 300, 1, 14, 70, 0.9, 25, 0.7);
+initDotCircle(4, 350, 400, 1, 14, 70, 0.9, 25, 0.7);
