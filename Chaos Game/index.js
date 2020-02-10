@@ -1,13 +1,21 @@
+let windowW = window.innerWidth;
+let windowH = window.innerHeight;
+
 let canvas = document.getElementById('canvas')
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let ctx = canvas.getContext('2d');
 
-let positions = [
-    { x: window.innerWidth / 2, y: 100 },
-    { x: 20, y: window.innerHeight - 100 },
-    { x: window.innerWidth - 20, y: window.innerHeight - 100 },
-]
+function getPos(){
+   var pos = [
+      { x: window.innerWidth / 2, y: 100 },
+      { x: 20, y: window.innerHeight - 100 },
+      { x: window.innerWidth - 20, y: window.innerHeight - 100 },
+    ]
+   return pos;
+}
+
+let positions = getPos();
 let diceRolls = [[1, 2], [3, 4], [5, 6]]
 
 let randomPoint = {
@@ -54,16 +62,38 @@ function roleDice() {
     return Math.floor(Math.random() * 6) + 1
 }
 
+
+function resizeCanvas() {
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    windowW = window.innerWidth;
+    widnowH = window.innerHeight;
+    ctx.clearRect(0, 0, window.innerwidth, window.innerHeight)
+
+   positions = getPos();
+   requestAnimationFrame(animate);
+
+}
+
+function checkIfResized() {
+    return (windowH !== window.innerHeight || windowW !== window.innerWidth) ? true : false;
+}
+
+
 function animate() {
+   
+   if (checkIfResized()) {
+        resizeCanvas();
+        return;
+    }
+   
     requestAnimationFrame(animate);
-    // for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 30; i++) {
         let middlePoint = getMiddle(randomPoint)
         randomPoint = middlePoint;
-    // }
+    }
 
 }
 
 init();
 requestAnimationFrame(animate)
-
-
