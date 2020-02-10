@@ -1,4 +1,4 @@
-<!DOCTYPE text\html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
     <link rel="stylesheet" href="index.css">
 </head>
 
-<body onload="initPage()">
+<body>
 
-    <canvas id="renderer"></canvas>
+    <input type='button' value='Play' id='playB' onclick="startStuff();"></input>
+    <canvas id="renderer" allow="autoplay"></canvas>
 
-    <audio id="myAudioFile" src="https://www.youtube.com/embed/ckxLXofmFF0"></audio>
     <script src="index.js"></script>
 
 </body>
