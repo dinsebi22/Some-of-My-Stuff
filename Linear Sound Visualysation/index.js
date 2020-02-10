@@ -1,14 +1,27 @@
 var canvas, ctx, bars,
     y_end, bar_height, bar_width,
     frequency_array;
-bars = 1300;
+bars = 500;
 bar_width = window.innerWidth / bars;
+
+
+let context = undefined;
+
+function startStuff() {
+    console.log("Playing")
+    context = new AudioContext();
+    initPage();
+    document.getElementById('playB').style.display = 'none';
+}
 
 function initPage() {
     audio = new Audio();
-    context = new(window.AudioContext || window.webkitAudioContext)();
+    audio.src =
+        "https://archive.org/download/VivaldiSummer/Antonio_vivaldi_Summer.mp3";
+    audio.controls = false;
+    audio.crossOrigin = "anonymous";
     analyser = context.createAnalyser();
-    audio.src = "sciophobia.mp3"; // the source path
+    // audio.src = "sciophobia.mp3"; // the source path
     source = context.createMediaElementSource(audio);
     source.connect(analyser);
     analyser.connect(context.destination);
@@ -38,7 +51,7 @@ function animationLooper() {
     x = 0;
     for (var i = 0; i < bars; i++) {
         //divide a circle into equal parts
-        bar_height = frequency_array[i] * 3;
+        bar_height = frequency_array[i] * 2.5;
         // set coordinates
 
         y = window.innerHeight;
