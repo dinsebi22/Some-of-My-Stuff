@@ -1,3 +1,6 @@
+let windowW = window.innerWidth;
+let windowH = window.innerHeight;
+
 let canvas = document.getElementById('container');
 let context = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -108,18 +111,10 @@ function Asteroid(x, y, radius, orbitRadius, angle) {
 
 
 
-function animate() {
-    requestAnimationFrame(animate);
-    context.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    for (var i = 0; i < bodies.length; i++) {
-        bodies[i].orbit();
-    }
-}
-
 function init() {
     for (let i = 0; i < planetCount; i++) {
         // Bodie(pos.x , pos.y , element radius , orbit radius , rotation angle per second)
-        var b1 = new Bodie(mousePos.x, mousePos.y, 13, 400, 6);
+        var b1 = new Bodie(mousePos.x, mousePos.y, 13, 200, 6);
         bodies.push(b1);
 
         for (let i = 0; i < maxAsteroidCount; i++) {
@@ -130,7 +125,36 @@ function init() {
     }
 }
 
+function resizeCanvas() {
+    context.canvas.width = window.innerWidth;
+    context.canvas.height = window.innerHeight;
+    windowW = window.innerWidth;
+    windowH = window.innerHeight;
+    context.clearRect(0, 0, window.innerwidth, window.innerHeight)
 
+    bodies = [];
+    init();
+    requestAnimationFrame(animate);
+
+}
+
+function checkIfResized() {
+    return (windowH !== window.innerHeight || windowW !== window.innerWidth) ? true : false;
+}
+
+function animate() {
+   if (checkIfResized()) {
+        resizeCanvas();
+        return;
+    }else{
+      requestAnimationFrame(animate);
+    context.clearRect(0, 0, window.innerWidth, window.innerHeight)
+   }
+    
+    for (var i = 0; i < bodies.length; i++) {
+        bodies[i].orbit();
+    }
+}
 let planetCount = 15;
 let maxAsteroidCount = Math.random() * 4;
 
