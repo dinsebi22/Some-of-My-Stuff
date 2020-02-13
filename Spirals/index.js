@@ -65,7 +65,7 @@ function resizeCanvas() {
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
     windowW = window.innerWidth;
-    widnowH = window.innerHeight;
+    windowH = window.innerHeight;
     ctx.clearRect(0, 0, window.innerwidth, window.innerHeight)
 
     lines = [];
