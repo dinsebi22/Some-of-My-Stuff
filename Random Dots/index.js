@@ -1,3 +1,6 @@
+let windowW = window.innerWidth;
+let windowH = window.innerHeight;
+
 let canvas = document.getElementById('canvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -17,8 +20,8 @@ function Dot(x, y, dotSize, color, maxSteps) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.dotSize, 0, Math.PI * 2);
         // Assuming your canvas element is ctx
-        ctx.shadowColor = "rgba(0, 255, 0, 0.06)" // string
-        ctx.shadowBlur = 15; // integer
+        ctx.shadowColor = "rgba(55, 55, 55, 0.3)" // string
+        ctx.shadowBlur = 12; // integer
         ctx.closePath();
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -51,7 +54,7 @@ function Dot(x, y, dotSize, color, maxSteps) {
 
     this.direction = this.changeDirection();
     this.move = function() {
-        let speed = 3;
+        let speed = 7;
         if (this.maxSteps >= this.stepsMade) {
 
             if (this.direction === 'up' && this.y - speed > 0) {
@@ -81,19 +84,6 @@ function Dot(x, y, dotSize, color, maxSteps) {
 
 
 
-function animate() {
-    requestAnimationFrame(animate);
-
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.09)'
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-    for (let i = 0; i < dots.length; i++) {
-        dots[i].draw();
-        dots[i].update();
-    }
-}
-
-
 
 function init(dotCount, dotSize) {
     let dotsW = (window.innerWidth) / dotCount;
@@ -104,14 +94,14 @@ function init(dotCount, dotSize) {
     for (let i = 0; i < dotCount; i++) {
         //Horizontal
         dots.push(new Dot(offsetX, 0, dotSize, 'green', 30));
-        dots.push(new Dot(offsetX, window.innerHeight - dotSize, dotSize, 'green', 30));
+        dots.push(new Dot(offsetX, window.innerHeight - dotSize, dotSize, 'white', 30));
 
         //Increment
         offsetX += dotsW;
         // offsetY += dotsH;
     }
     dots.push(new Dot(offsetX - dotSize, 0, dotSize, 'green', 30));
-    dots.push(new Dot(offsetX - dotSize, window.innerHeight - dotSize, dotSize, 'green', 30));
+    dots.push(new Dot(offsetX - dotSize, window.innerHeight - dotSize, dotSize, 'white', 30));
 
 
     offsetX = 0 + dotsW;
@@ -119,7 +109,7 @@ function init(dotCount, dotSize) {
     for (let i = 0; i < dotCount - 1; i++) {
         //Vertical
         dots.push(new Dot(0, offsetY, dotSize, 'green', 30));
-        dots.push(new Dot(window.innerWidth - dotSize, offsetY, dotSize, 'green', 30));
+        dots.push(new Dot(window.innerWidth - dotSize, offsetY, dotSize, 'white', 30));
 
         //Increment
         offsetX += dotsW;
@@ -127,6 +117,45 @@ function init(dotCount, dotSize) {
     }
 }
 
-init(122, 5)
+
+function resizeCanvas() {
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    windowW = window.innerWidth;
+    windowH = window.innerHeight;
+    ctx.clearRect(0, 0, window.innerwidth, window.innerHeight)
+
+    dots = [];
+
+    init(50,2)
+    requestAnimationFrame(animate);
+
+}
+
+function checkIfResized() {
+    return (windowH !== window.innerHeight || windowW !== window.innerWidth) ? true : false;
+}
+
+
+function animate() {
+   if (checkIfResized()) {
+        resizeCanvas();
+        return;
+    }else{
+      requestAnimationFrame(animate);
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.09)'
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+   }
+    
+
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].draw();
+        dots[i].update();
+    }
+}
+
+
+init(100, 2)
 
 animate();
