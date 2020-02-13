@@ -71,7 +71,7 @@ function resizeCanvas() {
     c.canvas.height = window.innerHeight;
    
     windowW = window.innerWidth;
-    widnowH = window.innerHeight;
+    windowH = window.innerHeight;
 
     snow = [];
     init();
