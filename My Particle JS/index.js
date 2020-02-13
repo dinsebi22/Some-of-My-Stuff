@@ -83,7 +83,7 @@ function resizeCanvas() {
     c.canvas.width = window.innerWidth;
     c.canvas.height = window.innerHeight;
     windowW = window.innerWidth;
-    widnowH = window.innerHeight;
+    windowH = window.innerHeight;
     c.clearRect(0, 0, window.innerwidth, window.innerHeight)
 
     particles = [];
