@@ -2,16 +2,16 @@ let windowW = window.innerWidth;
 let windowH = window.innerHeight;
 
 let detail = 2;
-let textSize = Math.floor((window.innerHeight * window.innerWidth) / 6000);
+let textSize = Math.floor(window.innerWidth / 6.5);
 
 let canvas;
 let ctx;
 let textImageData;
 let points;
 let imageGrid;
-let texts = ["Coding", "Adventure"];
+let texts = ["Colorfull", "Coding", "Adventure"];
 let imgHeight = texts.length * textSize;
-let topOffset = textSize / 5;
+let topOffset = textSize / 1.5;
 
 function initCtx() {
   canvas = document.getElementById("canvas");
@@ -31,12 +31,17 @@ function drawText(texts) {
     textCtx.fillStyle = "red";
     textCtx.fillText(
       texts[i],
-      window.innerWidth / 2 - (textSize * texts[i].length) / 3.2,
-      textSize * (i + 1) - topOffset
+      textSize / 3.3,
+      window.innerHeight / (texts.length + 1) + textSize * (i + 1) - topOffset
     );
   }
 
-  textImageData = textCtx.getImageData(0, 0, canvas.width, imgHeight);
+  textImageData = textCtx.getImageData(
+    0,
+    0,
+    window.innerWidth,
+    window.innerHeight
+  );
 
   for (let y = 0; y < textImageData.height; y += detail) {
     let row = [];
@@ -55,12 +60,8 @@ function init() {
   imageGrid = [];
 
   drawText(texts);
-  // Position Canvas
-  canvas.style.paddingTop =
-    (window.innerHeight - textImageData.height) / 2 + "px";
 
-  initParticles(4000);
-
+  initParticles(Math.floor(window.innerWidth));
   render();
 }
 
@@ -68,8 +69,8 @@ function initParticles(count) {
   for (let i = 0; i < count; i++) {
     points.push(
       new Particle(
-        textImageData.width * Math.random(),
-        textImageData.height * Math.random()
+        window.innerWidth * Math.random(),
+        window.innerHeight * Math.random()
       )
     );
   }
@@ -81,14 +82,19 @@ class Particle {
     this.y = y;
     this.acceleration = 2;
     this.size = 2;
-    this.color = "rgba(0,255,0 ," + this.size / 5 + ")";
+    this.color = pickColor(Math.random());
   }
 
   move() {
     this.y += this.acceleration;
 
-    if (this.y >= textImageData.height) {
+    if (this.y >= window.innerHeight) {
       this.y = 0;
+    }
+    this.x += this.acceleration;
+
+    if (this.x >= window.innerWidth) {
+      this.x = 0;
     }
 
     let value =
@@ -98,7 +104,7 @@ class Particle {
       this.size = 4;
     } else {
       this.acceleration = 4;
-      this.size = 2;
+      this.size = 1;
     }
   }
 
@@ -111,8 +117,13 @@ class Particle {
   }
 }
 
+function pickColor(num) {
+  let colors = ["red", "white", "blue", "yellow", "pink"];
+  return colors[Math.floor(num * (colors.length + 1))];
+}
+
 function render() {
-  ctx.fillStyle = "rgba(0,0,0,0.3)";
+  ctx.fillStyle = "rgba(0,0,0,0.041)";
   ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
   if (checkIfResized()) {
     resizeCanvas();
@@ -144,8 +155,8 @@ function resizeCanvas() {
   windowW = window.innerWidth;
   windowH = window.innerHeight;
 
-  textSize = Math.floor((window.innerWidth * window.innerHeight) / 6000);
-  topOffset = textSize / 5;
+  textSize = Math.floor(window.innerWidth / 6.5);
+  topOffset = textSize / 1.5;
 
   imgHeight = texts.length * textSize;
 
